@@ -7,7 +7,7 @@ Small TypeScript demo that stores knowledge in MongoDB Atlas, exposes an HTTP AP
 - Node.js 20+
 - A MongoDB Atlas cluster, database user, and IP access list entry
 - Ollama installed and running locally
-- An Ollama model, for example `ollama pull llama3.2`
+- An Ollama model, for example `ollama pull qwen3:1.7b`
 
 ## Setup
 

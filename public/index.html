@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="A visual MongoDB Atlas and Ollama RAG demonstration." />
+    <title>Atlas Lab — MongoDB + local AI</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <main class="shell">
+      <nav class="nav">
+        <a class="brand" href="/"><span class="brand-mark">✦</span> Atlas Lab</a>
+        <span class="status"><i id="status-dot"></i><span id="status-text">Connecting…</span></span>
+      </nav>
+
+      <section class="hero">
+        <div class="eyebrow">MONGODB ATLAS × OLLAMA</div>
+        <h1>Your data,<br /><em>answered clearly.</em></h1>
+        <p class="lede">A transparent RAG demo: MongoDB Atlas retrieves the facts, and a local AI model turns them into a useful answer.</p>
+        <div class="hero-actions">
+          <a class="button button-primary" href="#ask">Try the agent <span>↓</span></a>
+          <a class="button button-ghost" href="https://github.com/phlppgdfry/MongoDB-lab-1" target="_blank" rel="noreferrer">View source ↗</a>
+        </div>
+      </section>
+
+      <section class="pipeline" aria-label="Architecture">
+        <div><span>01</span><strong>Ask</strong><small>Your question</small></div>
+        <b>→</b>
+        <div><span>02</span><strong>Retrieve</strong><small>Atlas knowledge base</small></div>
+        <b>→</b>
+        <div><span>03</span><strong>Generate</strong><small>Local Ollama model</small></div>
+        <b>→</b>
+        <div><span>04</span><strong>Answer</strong><small>With visible sources</small></div>
+      </section>
+
+      <section class="workspace" id="ask">
+        <div class="panel ask-panel">
+          <div class="panel-heading"><div><span class="kicker">LIVE DEMO</span><h2>Ask the Atlas Lab</h2></div><span class="model" id="model-name">local model</span></div>
+          <form id="ask-form">
+            <label for="question">What would you like to know?</label>
+            <textarea id="question" maxlength="500" rows="4" placeholder="Try: How does MongoDB Atlas fit into this demo?"></textarea>
+            <div class="form-footer"><span id="character-count">0 / 500</span><button class="button button-primary" type="submit">Ask agent <span>↗</span></button></div>
+          </form>
+          <div class="suggestions"><button type="button">What is MongoDB Atlas?</button><button type="button">What does Ollama do?</button><button type="button">Why use Compass?</button></div>
+        </div>
+        <div class="panel answer-panel" aria-live="polite">
+          <div class="panel-heading"><div><span class="kicker">AGENT RESPONSE</span><h2 id="answer-title">Ready when you are</h2></div><span class="latency" id="latency"></span></div>
+          <div id="answer" class="answer empty">Ask a question to see a grounded answer from your Atlas knowledge base.</div>
+          <div id="sources" class="sources"></div>
+        </div>
+      </section>
+
+      <section class="facts">
+        <div><span class="fact-number">01</span><h3>Grounded by design</h3><p>The model receives retrieved documents as context, so you can see where an answer comes from.</p></div>
+        <div><span class="fact-number">02</span><h3>Local by default</h3><p>Ollama runs the model on your machine. No AI API key or prompt data leaves this demo.</p></div>
+        <div><span class="fact-number">03</span><h3>Built to extend</h3><p>Swap text search for Atlas Vector Search, add auth, or connect your own product knowledge.</p></div>
+      </section>
+
+      <footer><span>Atlas Lab · an open learning demo</span><span>TypeScript · MongoDB Atlas · Ollama</span></footer>
+    </main>
+    <script type="module" src="/app.js"></script>
+  </body>
+</html>

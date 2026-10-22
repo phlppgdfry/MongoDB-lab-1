@@ -1,6 +1,23 @@
 {
   "name": "mongodb-atlas-ollama-agent-demo",
   "version": "1.0.0",
+  "description": "A MongoDB Atlas and local Ollama RAG showcase with a TypeScript API and web UI.",
+  "author": "Philippe Godfroy",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/phlppgdfry/MongoDB-lab-1.git"
+  },
+  "keywords": [
+    "mongodb",
+    "mongodb-atlas",
+    "ollama",
+    "rag",
+    "local-ai",
+    "typescript",
+    "nodejs",
+    "retrieval-augmented-generation"
+  ],
   "private": true,
   "type": "module",
   "scripts": {

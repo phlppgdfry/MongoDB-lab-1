@@ -4,6 +4,12 @@
 ![MongoDB Atlas](https://img.shields.io/badge/MongoDB_Atlas-RAG-47A248?logo=mongodb&logoColor=white)
 ![Ollama](https://img.shields.io/badge/Ollama-local_AI-black)
 
+<!-- showcase:start -->
+> **[▶ Try the retrieval live](https://phlppgdfry.github.io/MongoDB-lab-1/)** — see a question become search terms, a MongoDB filter, ranked sources and the exact prompt, with answers recorded from the real app and an option to use your own Ollama.
+
+[![Try the retrieval live: MongoDB-lab-1](site/demo.png)](https://phlppgdfry.github.io/MongoDB-lab-1/)
+<!-- showcase:end -->
+
 > A small, inspectable RAG showcase: MongoDB Atlas retrieves the facts, and a local Ollama model turns them into a grounded answer.
 
 **Live locally:** `http://localhost:3000` · **Source:** [github.com/phlppgdfry/MongoDB-lab-1](https://github.com/phlppgdfry/MongoDB-lab-1)

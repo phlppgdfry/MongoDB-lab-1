@@ -1,0 +1,104 @@
+{
+ "recordedAt": "2026-11-17",
+ "model": "qwen3:1.7b",
+ "database": "local MongoDB 7 with the repo seed (Atlas unreachable from this machine at recording time)",
+ "answers": [
+  {
+   "answer": "Ollama",
+   "sources": [
+    {
+     "title": "Ollama",
+     "tags": [
+      "ollama",
+      "ai",
+      "local"
+     ]
+    }
+   ],
+   "model": "qwen3:1.7b",
+   "retrievalMs": 10,
+   "generationMs": 1268,
+   "question": "Which tool runs a model locally?"
+  },
+  {
+   "answer": "MongoDB Atlas is a managed cloud database service. It provides a scalable, secure, and easy-to-use platform for storing and managing data. To connect an application, a connection string and database user are required.",
+   "sources": [
+    {
+     "title": "MongoDB Atlas",
+     "tags": [
+      "atlas",
+      "cloud",
+      "database"
+     ]
+    },
+    {
+     "title": "MongoDB Compass",
+     "tags": [
+      "compass",
+      "desktop"
+     ]
+    }
+   ],
+   "model": "qwen3:1.7b",
+   "retrievalMs": 13,
+   "generationMs": 1652,
+   "question": "What is MongoDB Atlas?"
+  },
+  {
+   "answer": "MongoDB Compass is a desktop application designed for intuitive access to MongoDB databases. It allows users to browse collections, view documents, manage indexes, and analyze performance metrics visually, offering a streamlined interface for database management and exploration.",
+   "sources": [
+    {
+     "title": "MongoDB Compass",
+     "tags": [
+      "compass",
+      "desktop"
+     ]
+    }
+   ],
+   "model": "qwen3:1.7b",
+   "retrievalMs": 8,
+   "generationMs": 2127,
+   "question": "Why use Compass?"
+  },
+  {
+   "answer": "To connect an application to MongoDB Atlas, you need a connection string and a database user. The connection string includes the host, port, database name, and credentials. The user must be created in the Atlas dashboard with the appropriate username and password. The application uses the connection string and user credentials to establish the connection.",
+   "sources": [
+    {
+     "title": "MongoDB Atlas",
+     "tags": [
+      "atlas",
+      "cloud",
+      "database"
+     ]
+    },
+    {
+     "title": "MongoDB Compass",
+     "tags": [
+      "compass",
+      "desktop"
+     ]
+    }
+   ],
+   "model": "qwen3:1.7b",
+   "retrievalMs": 14,
+   "generationMs": 6620,
+   "question": "How do I connect an application to Atlas?"
+  },
+  {
+   "answer": "I could not find this in the knowledge base, so I will not guess. Try asking about MongoDB Atlas, Compass or Ollama.",
+   "sources": [],
+   "model": "qwen3:1.7b",
+   "retrievalMs": 13,
+   "generationMs": 0,
+   "question": "Who won the 2018 World Cup?"
+  },
+  {
+   "answer": "I could not find this in the knowledge base, so I will not guess. Try asking about MongoDB Atlas, Compass or Ollama.",
+   "sources": [],
+   "model": "qwen3:1.7b",
+   "retrievalMs": 0,
+   "generationMs": 0,
+   "question": "how do I do it?"
+  }
+ ]
+}

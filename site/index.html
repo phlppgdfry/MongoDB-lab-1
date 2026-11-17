@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Atlas Lab — a small RAG demo where every answer shows its sources</title>
+<meta name="description" content="MongoDB Atlas retrieves the facts, a local Ollama model writes the answer, and the UI shows which documents were used. Step through retrieval live in your browser.">
+<link rel="canonical" href="https://phlppgdfry.github.io/MongoDB-lab-1/">
+<meta property="og:type" content="website"><meta property="og:title" content="Atlas Lab — a small RAG demo where every answer shows its sources"><meta property="og:description" content="MongoDB Atlas retrieves the facts, a local Ollama model writes the answer, and the UI shows which documents were used. Step through retrieval live in your browser.">
+<meta property="og:url" content="https://phlppgdfry.github.io/MongoDB-lab-1/"><meta property="og:image" content="https://phlppgdfry.github.io/MongoDB-lab-1/og.jpg"><meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#0a0d12">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%2300ed64'/%3E%3C/svg%3E">
+<link rel="preload" href="assets/space-grotesk-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="assets/showcase.css">
+<style>:root{--brand:#00ed64;--accent-ink:#001e2b}
+.al-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.al-grid>*{min-width:0}
+@media (max-width:900px){.al-grid{grid-template-columns:1fr}}
+.al-chips{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0 14px}
+.al-chips button{font:500 12px var(--sans);padding:6px 10px;border-radius:999px;border:1px solid var(--line2);background:var(--bg2);color:var(--muted);cursor:pointer}
+.al-chips button:hover{color:var(--fg);border-color:var(--accent)}
+.al-step{display:flex;gap:10px;margin-top:12px}
+.al-step>div:last-child{min-width:0;flex:1}
+.al-n{flex:none;width:26px;height:26px;border-radius:8px;display:grid;place-items:center;background:color-mix(in srgb,var(--accent) 16%,transparent);color:var(--accent);font:600 13px var(--mono)}
+.al-terms{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+.al-pre{background:var(--bg2);border:1px solid var(--line);border-radius:8px;padding:10px;font-size:11.5px;color:var(--muted);white-space:pre-wrap;overflow-wrap:anywhere;margin:6px 0 0;max-height:180px;overflow:auto}
+.al-prompt{max-height:260px}
+.al-doc{display:flex;justify-content:space-between;gap:8px;align-items:center;background:var(--bg2);border:1px solid var(--line);border-radius:8px;padding:8px 10px;margin-top:6px;font-size:14px;opacity:.55}
+.al-doc.in{opacity:1;border-color:color-mix(in srgb,var(--accent) 45%,var(--line))}
+.al-answer{background:var(--bg2);border:1px solid var(--line);border-radius:10px;padding:12px;margin-top:6px;font-size:15px;min-height:60px}
+.al-answer code{font-size:12px;overflow-wrap:anywhere}
+.al-row{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}
+.al-sm{padding:7px 11px;font-size:13px}
+</style>
+</head>
+<body>
+<div class="top"><div class="wrap">
+  <a class="brand" href="#"><i class="dot"></i><span>Atlas Lab</span></a>
+  <nav><a class="" href="#demo">Try it</a><a class="" href="#how">How it works</a><a class="hide-sm" href="#screens">Screens</a><a class="hide-sm" href="#run">Run it</a><a href="https://github.com/phlppgdfry/MongoDB-lab-1" aria-label="GitHub repository">GitHub</a><button class="theme" type="button" aria-label="Toggle light or dark theme"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg></button></nav>
+</div></div>
+<main>
+<header class="hero"><div class="wrap grid">
+  <div>
+    <div class="kicker"><span>TypeScript · MongoDB Atlas · Ollama · RAG</span><span class="chip status">Lab</span></div>
+    <h1>Retrieval first. <em>Then</em> the model.</h1>
+    <p class="lede">Atlas Lab is deliberately small so every moving part of a grounded AI answer is visible: the question becomes search terms, MongoDB returns matching documents, a local model answers from those only, and the UI lists the sources. When nothing matches, the model is not asked at all.</p>
+    <div class="ctas"><a class="btn primary" href="#demo"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg> Try the retrieval</a><a class="btn" href="https://github.com/phlppgdfry/MongoDB-lab-1"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5a11.5 11.5 0 0 0-3.64 22.41c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.53-1.33-1.28-1.69-1.28-1.69-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.77 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.84 1.19 3.1 0 4.42-2.7 5.39-5.26 5.68.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 12 .5Z"/></svg> Source on GitHub</a></div>
+    <div class="stack"><span class="chip">TypeScript</span><span class="chip">Node.js HTTP server</span><span class="chip">MongoDB Atlas</span><span class="chip">Ollama · qwen3:1.7b</span><span class="chip">node:test</span><span class="chip">Docker</span><span class="chip">GitHub Actions</span></div>
+  </div>
+  <div class="hero-visual"><div class="frame"><img src="img/MongoDB-lab-1-shots-grounded.webp" alt="Atlas Lab" width="1600" height="832"></div><div class="caption">The real app answering from one retrieved document, with the source listed under the answer.</div></div>
+</div></header>
+<section id="why"><div class="wrap">
+  <p class="eyebrow">Why it exists</p><h2>"Answer only from the knowledge base" is a wish, not a control.</h2>
+  <div class="problem">
+    <div class="card before"><div class="label">Without it</div><p>Asked who won the 2018 World Cup with nothing retrieved, the original app passed an empty context to qwen3:1.7b, which replied "Brazil": ungrounded and wrong. A placeholder test kept CI green the whole time.</p></div>
+    <div class="card after"><div class="label">With it</div><p>Retrieval drops stop words and ranks documents by matched terms. If nothing is retrieved, the API returns a fixed refusal without calling the model. The UI renders model output as escaped text and lists every source. Real tests cover the retrieval rules.</p></div>
+  </div>
+</div></section>
+<section id="demo"><div class="wrap">
+  <p class="eyebrow">Try it · runs in your browser</p><h2>Watch a question become a grounded prompt</h2>
+  <p class="sub">Retrieval runs live with the repository's own <code>src/search.ts</code>, compiled to JavaScript, over the three seeded documents. Sample answers were recorded from the real app. For other questions you can send the exact prompt to your own local Ollama.</p>
+  <div class="demo"><div class="al-grid">
+  <div>
+    <label for="al-q">Question</label>
+    <textarea id="al-q" style="min-height:70px"></textarea>
+    <div class="al-chips" id="al-chips"></div>
+    <div class="al-step"><div class="al-n">1</div><div><b>Search terms</b> <span class="dim small">stop words and short words removed</span><div id="al-terms" class="al-terms"></div></div></div>
+    <div class="al-step"><div class="al-n">2</div><div><b>MongoDB filter</b> <span class="dim small">sent to the <code>knowledge</code> collection</span><pre id="al-filter" class="al-pre"></pre></div></div>
+    <div class="al-step"><div class="al-n">3</div><div><b>Ranked documents</b> <span class="dim small">title or tag match 2, content match 1</span><div id="al-docs"></div></div></div>
+  </div>
+  <div>
+    <div class="al-step"><div class="al-n">4</div><div style="min-width:0;flex:1"><b>Prompt for the local model</b><pre id="al-prompt" class="al-pre al-prompt"></pre></div></div>
+    <div class="al-step"><div class="al-n">5</div><div style="min-width:0;flex:1"><b>Answer</b> <span id="al-src" class="dim small"></span><div id="al-answer" class="al-answer"></div>
+      <div class="al-row"><button type="button" class="btn al-sm" id="al-local">Ask my own Ollama</button><input id="al-model" value="qwen3:1.7b" aria-label="Ollama model" style="max-width:160px"></div>
+      <div id="al-local-msg" class="small dim"></div></div></div>
+  </div>
+</div>
+</div>
+  <p class="note">Recorded on 17 November 2026 against a local MongoDB 7 with the repo's seed data: the Atlas cluster rejected this machine's connection (TLS alert, typically an IP access-list setting), so screenshots and answers come from the same code pointed at a local database.</p>
+</div></section>
+<section id="how"><div class="wrap">
+  <p class="eyebrow">How it works</p><h2>Small on purpose, production-minded where it counts</h2>
+  
+  <div class="cards"><div class="card"><div class="ic">01</div><h3>Visible grounding</h3><p>The model only sees documents retrieved from the <code>knowledge</code> collection, and the UI lists them with every answer.</p></div><div class="card"><div class="ic">02</div><h3>Refuse instead of improvise</h3><p>No searchable terms or no matching documents means no model call and a fixed answer. Tested, not just prompted.</p></div><div class="card"><div class="ic">03</div><h3>Safe API surface</h3><p>Body size limit, JSON validation, per-IP rate limiting, structured errors, health check and no secrets in source control.</p></div><div class="card"><div class="ic">04</div><h3>Ready to grow</h3><p>Retrieval is isolated in <code>search.ts</code>, so keyword matching can be swapped for Atlas Search or Vector Search without touching the UI.</p></div></div>
+  <h3 style="margin:34px 0 14px">The flow, step by step</h3><div class="flow" role="list"><div class="node"><div class="n">01</div><b>Question</b><small>validated, 3 to 500 characters</small></div><div class="arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div><div class="node"><div class="n">02</div><b>Search terms</b><small>lower-case, stop words removed</small></div><div class="arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div><div class="node hl"><div class="n">03</div><b>MongoDB</b><small>regex over title, content and tags; ranked</small></div><div class="arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div><div class="node"><div class="n">04</div><b>Local model</b><small>Ollama, only when something was retrieved</small></div><div class="arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div><div class="node"><div class="n">05</div><b>Answer + sources</b><small>escaped output, sources listed</small></div></div>
+</div></section>
+<section id="screens"><div class="wrap">
+  <p class="eyebrow">Screens</p><h2>What it looks like</h2>
+  <p class="sub">The real app, run locally and captured with Playwright.</p>
+  <div class="gallery"><figure data-zoom="Out of scope, refused — No documents matched, so the model was not called (7 ms)."><div class="frame"><img src="img/MongoDB-lab-1-shots-refused.webp" alt="Out of scope, refused" width="1600" height="832" loading="lazy" decoding="async"></div><figcaption><b>Out of scope, refused</b> No documents matched, so the model was not called (7 ms).</figcaption></figure><figure data-zoom="A longer answer — Grounded in the Atlas document, but the 1.7B model still adds an example URI: the next step is an evaluation set."><div class="frame"><img src="img/MongoDB-lab-1-shots-atlas.webp" alt="A longer answer" width="1600" height="1131" loading="lazy" decoding="async"></div><figcaption><b>A longer answer</b> Grounded in the Atlas document, but the 1.7B model still adds an example URI: the next step is an evaluation set.</figcaption></figure><figure data-zoom="On a phone — The same app at 390 pixels."><div class="frame"><img src="img/MongoDB-lab-1-shots-mobile.webp" alt="On a phone" width="1170" height="2532" loading="lazy" decoding="async"></div><figcaption><b>On a phone</b> The same app at 390 pixels.</figcaption></figure></div>
+</div></section>
+<section id="evidence"><div class="wrap">
+  <p class="eyebrow">Evidence</p><h2>What is real, and what is not</h2>
+  <p class="sub">Running the app for this page exposed an ungrounded answer, a test that could not fail, raw markdown in answers and a layout that squeezed on long replies. All four are fixed.</p>
+  <div class="metrics"><div class="metric"><div class="v">6</div><div class="l">real tests</div><div class="s">replacing one that asserted typeof "/api/health" === "string"</div></div><div class="metric"><div class="v">0 ms</div><div class="l">model time when nothing matches</div><div class="s">a fixed refusal instead of a guess</div></div><div class="metric"><div class="v">3</div><div class="l">seed documents</div><div class="s">small enough to read in one sitting</div></div></div>
+  <div class="honest" style="margin-top:18px">
+      <div class="card real"><h3><span class="pill ok">REAL</span> Built and verified</h3><ul><li>Node.js API with MongoDB retrieval, Ollama generation, rate limiting and health checks</li><li>Answers and screenshots on this page come from the real app and a real local model</li><li>Retrieval rules and the no-sources refusal are covered by tests in CI</li></ul></div>
+      <div class="card sim"><h3><span class="pill warn">SIMULATED</span> Mocked or not built yet</h3><ul><li>Keyword matching, not Atlas Search or vector search yet</li><li>Three seed documents; no evaluation set for answer quality yet</li><li>Recorded against a local MongoDB because the Atlas cluster was not reachable from this machine</li></ul></div></div>
+</div></section>
+<section id="run"><div class="wrap two">
+  <div><p class="eyebrow">Run it yourself</p><h2>Run it locally</h2>
+  <p class="sub">Needs Node.js 20+, a MongoDB connection string (Atlas or local) and Ollama.</p>
+  <div class="code"><button class="copy" type="button">Copy</button><pre><code>git clone https://github.com/phlppgdfry/MongoDB-lab-1
+cd MongoDB-lab-1
+npm ci
+cp .env.example .env      # MONGODB_URI (Atlas or local), OLLAMA_MODEL
+
+ollama serve &amp; ollama pull qwen3:1.7b
+npm run seed              # three knowledge documents
+npm run dev               # http://localhost:3000
+npm run check             # build + tests</code></pre></div></div>
+  <div><p class="eyebrow">Go deeper</p><h2>Read the source</h2>
+  <div class="links"><a href="https://github.com/phlppgdfry/MongoDB-lab-1"><span>Repository</span><span>github</span></a><a href="https://github.com/phlppgdfry/MongoDB-lab-1/blob/HEAD/src/search.ts"><span>Retrieval rules</span><span>ts</span></a><a href="https://github.com/phlppgdfry/MongoDB-lab-1/blob/HEAD/src/server.ts"><span>Server and grounding</span><span>ts</span></a><a href="https://github.com/phlppgdfry/MongoDB-lab-1/blob/HEAD/test/search.test.ts"><span>Tests</span><span>ts</span></a><a href="https://github.com/phlppgdfry/MongoDB-lab-1/blob/HEAD/SECURITY.md"><span>Security notes</span><span>md</span></a></div></div>
+</div></section></main>
+<footer><div class="wrap">
+  <span>Atlas Lab · A portfolio project by Philippe Godfroy</span>
+  <span><a href="https://www.philippegodfroy.com/work">More projects</a> · <a href="https://github.com/phlppgdfry/MongoDB-lab-1">Source</a></span>
+</div></footer>
+<script src="assets/showcase.js"></script>
+<script src="assets/demo.js" type="module"></script>
+</body></html>

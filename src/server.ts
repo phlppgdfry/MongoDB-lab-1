@@ -5,6 +5,7 @@ import { extname, join, normalize } from "node:path";
 import { fileURLToPath } from "node:url";
 import { Ollama } from "ollama";
 import { closeDatabase, connectDatabase, knowledgeCollection } from "./db.js";
+import { rankDocuments, searchQuery, searchTerms } from "./search.js";
 
 const port = Number(process.env.PORT ?? 3000);
 const model = process.env.OLLAMA_MODEL ?? "qwen3:1.7b";
@@ -68,22 +69,13 @@ async function readJson(request: IncomingMessage): Promise<Record<string, unknow
   return parsed as Record<string, unknown>;
 }
 
-function searchQuery(question: string) {
-  const terms = [...new Set(question.toLowerCase().split(/[^a-z0-9]+/).filter((term) => term.length > 2))].slice(0, 8);
-  return terms.length
-    ? {
-        $or: terms.flatMap((term) => [
-          { title: { $regex: term, $options: "i" } },
-          { content: { $regex: term, $options: "i" } },
-          { tags: { $regex: term, $options: "i" } },
-        ]),
-      }
-    : {};
-}
-
 export async function answerQuestion(question: string): Promise<AskResult> {
   const retrievalStarted = performance.now();
-  const documents = (await knowledgeCollection().find(searchQuery(question)).limit(5).toArray()) as KnowledgeDocument[];
+  const terms = searchTerms(question);
+  const filter = searchQuery(terms);
+  // No searchable terms: retrieve nothing rather than handing the model the whole collection.
+  const candidates = filter ? ((await knowledgeCollection().find(filter).limit(25).toArray()) as KnowledgeDocument[]) : [];
+  const documents = rankDocuments(candidates, terms);
   const retrievalMs = Math.round(performance.now() - retrievalStarted);
   const context = documents.map((document) => `- ${document.title}: ${document.content}`).join("\n");
 

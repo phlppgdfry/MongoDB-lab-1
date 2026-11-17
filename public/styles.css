@@ -28,7 +28,7 @@ h1 em { color: #699248; font-style: normal; }
 .pipeline strong { font: 600 15px "Space Grotesk"; }
 .pipeline small { color: var(--muted); font-size: 12px; }
 .pipeline b { color: #9eaaa0; font-weight: 400; }
-.workspace { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; padding: 70px 0; }
+.workspace { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 18px; padding: 70px 0; }
 .panel { min-height: 420px; padding: 30px; background: var(--white); border: 1px solid var(--line); border-radius: 12px; }
 .panel-heading { display: flex; justify-content: space-between; gap: 15px; align-items: flex-start; margin-bottom: 34px; }
 h2 { margin: 8px 0 0; font: 600 27px "Space Grotesk"; letter-spacing: -.04em; }
@@ -52,4 +52,6 @@ textarea:focus { border-color: #84aa70; box-shadow: 0 0 0 3px #dff2ce; }
 .facts p { max-width: 290px; color: var(--muted); font-size: 14px; line-height: 1.6; }
 footer { border-top: 1px solid var(--line); padding: 22px 0 28px; color: #8a968c; font: 11px "DM Mono"; }
 @keyframes pulse { 50% { opacity: .35; } }
-@media (max-width: 720px) { .shell { padding: 22px 20px 0; } .hero { padding: 90px 0 75px; } .workspace, .facts { grid-template-columns: 1fr; } .pipeline { grid-template-columns: 1fr 1fr; gap: 22px; } .pipeline b { display: none; } footer { gap: 15px; flex-direction: column; align-items: flex-start; } }
+@media (max-width: 720px) { .shell { padding: 22px 20px 0; } .hero { padding: 90px 0 75px; } .workspace, .facts { grid-template-columns: minmax(0, 1fr); } .pipeline { grid-template-columns: 1fr 1fr; gap: 22px; } .pipeline b { display: none; } footer { gap: 15px; flex-direction: column; align-items: flex-start; } }
+
+#answer code { font-family: "JetBrains Mono", ui-monospace, monospace; font-size: .86em; background: rgba(0,0,0,.05); padding: 1px 5px; border-radius: 4px; overflow-wrap: anywhere; }

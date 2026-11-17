@@ -25,9 +25,18 @@ async function health() {
   }
 }
 
+// Model output is untrusted: escape everything, then allow only **bold**, `code` and line breaks.
+function renderAnswer(text) {
+  const escaped = text.replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
+  return escaped
+    .replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>")
+    .replace(/`([^`]+)`/g, "<code>$1</code>")
+    .replace(/\n/g, "<br>");
+}
+
 function showSources(items) {
   sources.innerHTML = items.length
-    ? `<span class="sources-label">Retrieved from Atlas</span>${items.map((item) => `<span class="source">${item.title}</span>`).join("")}`
+    ? `<span class="sources-label">Retrieved from Atlas</span>${items.map((item) => `<span class="source">${String(item.title).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c])}</span>`).join("")}`
     : `<span class="sources-label">No matching documents</span>`;
 }
 
@@ -48,7 +57,7 @@ async function ask(event) {
     });
     const data = await response.json();
     if (!response.ok) throw new Error(data.error ?? "Request failed");
-    answer.textContent = data.answer;
+    answer.innerHTML = renderAnswer(data.answer);
     answerTitle.textContent = "Answer";
     latency.textContent = `${data.retrievalMs + data.generationMs}ms`;
     showSources(data.sources);

@@ -5,7 +5,7 @@ import { extname, join, normalize } from "node:path";
 import { fileURLToPath } from "node:url";
 import { Ollama } from "ollama";
 import { closeDatabase, connectDatabase, knowledgeCollection } from "./db.js";
-import { rankDocuments, searchQuery, searchTerms } from "./search.js";
+import { NO_SOURCES_ANSWER, rankDocuments, searchQuery, searchTerms } from "./search.js";
 
 const port = Number(process.env.PORT ?? 3000);
 const model = process.env.OLLAMA_MODEL ?? "qwen3:1.7b";
@@ -77,6 +77,11 @@ export async function answerQuestion(question: string): Promise<AskResult> {
   const candidates = filter ? ((await knowledgeCollection().find(filter).limit(25).toArray()) as KnowledgeDocument[]) : [];
   const documents = rankDocuments(candidates, terms);
   const retrievalMs = Math.round(performance.now() - retrievalStarted);
+  // Without sources the model is not asked at all: a small model answers anyway, even when told not to
+  // (asked who won the 2018 World Cup with no documents, qwen3:1.7b replied "Brazil").
+  if (!documents.length) {
+    return { answer: NO_SOURCES_ANSWER, sources: [], model, retrievalMs, generationMs: 0 };
+  }
   const context = documents.map((document) => `- ${document.title}: ${document.content}`).join("\n");
 
   const generationStarted = performance.now();
@@ -87,7 +92,7 @@ export async function answerQuestion(question: string): Promise<AskResult> {
       {
         role: "system",
         content:
-          "You are the Atlas Lab assistant. Answer only from the supplied knowledge base. If the answer is not present, say you do not know. Be concise and do not invent sources.",
+          "You are the Atlas Lab assistant. Answer only from the supplied knowledge base. If the answer is not present, say you do not know. Be concise. Do not add facts, steps, names or sources that are not in the knowledge base.",
       },
       { role: "user", content: `Knowledge base:\n${context || "(no matching documents)"}\n\nQuestion: ${question}` },
     ],

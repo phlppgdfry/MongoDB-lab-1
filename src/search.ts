@@ -1,6 +1,9 @@
 // Keyword retrieval for the knowledge collection. Kept free of database and model imports so it can be
 // tested on its own and swapped for Atlas Search or Vector Search later.
 
+export const NO_SOURCES_ANSWER =
+  "I could not find this in the knowledge base, so I will not guess. Try asking about MongoDB Atlas, Compass or Ollama.";
+
 export type SearchableDocument = { title: string; content: string; tags: string[] };
 
 // Words that appear in almost every question and would match almost every document.

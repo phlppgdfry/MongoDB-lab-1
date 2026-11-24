@@ -46,7 +46,7 @@
     <div class="ctas"><a class="btn primary" href="#demo"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg> Try the retrieval</a><a class="btn" href="https://github.com/phlppgdfry/MongoDB-lab-1"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5a11.5 11.5 0 0 0-3.64 22.41c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.53-1.33-1.28-1.69-1.28-1.69-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.77 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.84 1.19 3.1 0 4.42-2.7 5.39-5.26 5.68.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 12 .5Z"/></svg> Source on GitHub</a></div>
     <div class="stack"><span class="chip">TypeScript</span><span class="chip">Node.js HTTP server</span><span class="chip">MongoDB Atlas</span><span class="chip">Ollama · qwen3:1.7b</span><span class="chip">node:test</span><span class="chip">Docker</span><span class="chip">GitHub Actions</span></div>
   </div>
-  <div class="hero-visual"><div class="frame"><img src="img/MongoDB-lab-1-shots-grounded.webp" alt="Atlas Lab" width="1600" height="832"></div><div class="caption">The real app answering from one retrieved document, with the source listed under the answer.</div></div>
+  <div class="hero-visual"><div class="frame"><img src="img/MongoDB-lab-1-shots-grounded.webp" alt="Atlas Lab" width="1600" height="832"></div><div class="caption">The real app connected to MongoDB Atlas, answering from one retrieved document with its source listed.</div></div>
 </div></header>
 <section id="why"><div class="wrap">
   <p class="eyebrow">Why it exists</p><h2>"Answer only from the knowledge base" is a wish, not a control.</h2>
@@ -75,7 +75,7 @@
   </div>
 </div>
 </div>
-  <p class="note">Recorded on 17 November 2026 against a local MongoDB 7 with the repo's seed data: the Atlas cluster rejected this machine's connection (TLS alert, typically an IP access-list setting), so screenshots and answers come from the same code pointed at a local database.</p>
+  <p class="note">Recorded on 24 November 2026 against the real MongoDB Atlas cluster with the repo's three seed documents and qwen3:1.7b through Ollama. Atlas retrieval took about 20 ms; generation a few seconds on a laptop.</p>
 </div></section>
 <section id="how"><div class="wrap">
   <p class="eyebrow">How it works</p><h2>Small on purpose, production-minded where it counts</h2>
@@ -85,8 +85,8 @@
 </div></section>
 <section id="screens"><div class="wrap">
   <p class="eyebrow">Screens</p><h2>What it looks like</h2>
-  <p class="sub">The real app, run locally and captured with Playwright.</p>
-  <div class="gallery"><figure data-zoom="Out of scope, refused — No documents matched, so the model was not called (7 ms)."><div class="frame"><img src="img/MongoDB-lab-1-shots-refused.webp" alt="Out of scope, refused" width="1600" height="832" loading="lazy" decoding="async"></div><figcaption><b>Out of scope, refused</b> No documents matched, so the model was not called (7 ms).</figcaption></figure><figure data-zoom="A longer answer — Grounded in the Atlas document, but the 1.7B model still adds an example URI: the next step is an evaluation set."><div class="frame"><img src="img/MongoDB-lab-1-shots-atlas.webp" alt="A longer answer" width="1600" height="1131" loading="lazy" decoding="async"></div><figcaption><b>A longer answer</b> Grounded in the Atlas document, but the 1.7B model still adds an example URI: the next step is an evaluation set.</figcaption></figure><figure data-zoom="On a phone — The same app at 390 pixels."><div class="frame"><img src="img/MongoDB-lab-1-shots-mobile.webp" alt="On a phone" width="1170" height="2532" loading="lazy" decoding="async"></div><figcaption><b>On a phone</b> The same app at 390 pixels.</figcaption></figure></div>
+  <p class="sub">The real app connected to the Atlas cluster, captured with Playwright.</p>
+  <div class="gallery"><figure data-zoom="Out of scope, refused — No documents matched, so the model was not called (7 ms)."><div class="frame"><img src="img/MongoDB-lab-1-shots-refused.webp" alt="Out of scope, refused" width="1600" height="832" loading="lazy" decoding="async"></div><figcaption><b>Out of scope, refused</b> No documents matched, so the model was not called (7 ms).</figcaption></figure><figure data-zoom="A longer answer — Grounded in the Atlas document, but the 1.7B model still adds an example URI: the next step is an evaluation set."><div class="frame"><img src="img/MongoDB-lab-1-shots-atlas.webp" alt="A longer answer" width="1600" height="1384" loading="lazy" decoding="async"></div><figcaption><b>A longer answer</b> Grounded in the Atlas document, but the 1.7B model still adds an example URI: the next step is an evaluation set.</figcaption></figure><figure data-zoom="On a phone — The same app at 390 pixels."><div class="frame"><img src="img/MongoDB-lab-1-shots-mobile.webp" alt="On a phone" width="1170" height="2532" loading="lazy" decoding="async"></div><figcaption><b>On a phone</b> The same app at 390 pixels.</figcaption></figure></div>
 </div></section>
 <section id="evidence"><div class="wrap">
   <p class="eyebrow">Evidence</p><h2>What is real, and what is not</h2>
@@ -94,7 +94,7 @@
   <div class="metrics"><div class="metric"><div class="v">6</div><div class="l">real tests</div><div class="s">replacing one that asserted typeof "/api/health" === "string"</div></div><div class="metric"><div class="v">0 ms</div><div class="l">model time when nothing matches</div><div class="s">a fixed refusal instead of a guess</div></div><div class="metric"><div class="v">3</div><div class="l">seed documents</div><div class="s">small enough to read in one sitting</div></div></div>
   <div class="honest" style="margin-top:18px">
       <div class="card real"><h3><span class="pill ok">REAL</span> Built and verified</h3><ul><li>Node.js API with MongoDB retrieval, Ollama generation, rate limiting and health checks</li><li>Answers and screenshots on this page come from the real app and a real local model</li><li>Retrieval rules and the no-sources refusal are covered by tests in CI</li></ul></div>
-      <div class="card sim"><h3><span class="pill warn">SIMULATED</span> Mocked or not built yet</h3><ul><li>Keyword matching, not Atlas Search or vector search yet</li><li>Three seed documents; no evaluation set for answer quality yet</li><li>Recorded against a local MongoDB because the Atlas cluster was not reachable from this machine</li></ul></div></div>
+      <div class="card sim"><h3><span class="pill warn">SIMULATED</span> Mocked or not built yet</h3><ul><li>Keyword matching, not Atlas Search or vector search yet</li><li>Three seed documents; no evaluation set for answer quality yet</li><li>Atlas access is limited to listed IP addresses; a changed home IP blocks the connection until it is added again</li></ul></div></div>
 </div></section>
 <section id="run"><div class="wrap two">
   <div><p class="eyebrow">Run it yourself</p><h2>Run it locally</h2>
@@ -116,5 +116,6 @@ npm run check             # build + tests</code></pre></div></div>
   <span><a href="https://www.philippegodfroy.com/work">More projects</a> · <a href="https://github.com/phlppgdfry/MongoDB-lab-1">Source</a></span>
 </div></footer>
 <script src="assets/showcase.js"></script>
+
 <script src="assets/demo.js" type="module"></script>
 </body></html>

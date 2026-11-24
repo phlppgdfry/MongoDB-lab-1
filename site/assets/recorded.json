@@ -1,7 +1,7 @@
 {
- "recordedAt": "2026-11-17",
+ "recordedAt": "2026-11-24",
  "model": "qwen3:1.7b",
- "database": "local MongoDB 7 with the repo seed (Atlas unreachable from this machine at recording time)",
+ "database": "MongoDB Atlas cluster (mongodb-lab-cluster), the repo seed documents",
  "answers": [
   {
    "answer": "Ollama",
@@ -16,8 +16,8 @@
     }
    ],
    "model": "qwen3:1.7b",
-   "retrievalMs": 10,
-   "generationMs": 1268,
+   "retrievalMs": 24,
+   "generationMs": 1188,
    "question": "Which tool runs a model locally?"
   },
   {
@@ -40,12 +40,12 @@
     }
    ],
    "model": "qwen3:1.7b",
-   "retrievalMs": 13,
-   "generationMs": 1652,
+   "retrievalMs": 20,
+   "generationMs": 1552,
    "question": "What is MongoDB Atlas?"
   },
   {
-   "answer": "MongoDB Compass is a desktop application designed for intuitive access to MongoDB databases. It allows users to browse collections, view documents, manage indexes, and analyze performance metrics visually, offering a streamlined interface for database management and exploration.",
+   "answer": "MongoDB Compass is a desktop application designed for easy navigation and management of MongoDB databases. It allows users to browse collections, view documents, manage indexes, and monitor performance metrics visually, making it intuitive for working with MongoDB data.",
    "sources": [
     {
      "title": "MongoDB Compass",
@@ -56,12 +56,12 @@
     }
    ],
    "model": "qwen3:1.7b",
-   "retrievalMs": 8,
-   "generationMs": 2127,
+   "retrievalMs": 19,
+   "generationMs": 1572,
    "question": "Why use Compass?"
   },
   {
-   "answer": "To connect an application to MongoDB Atlas, you need a connection string and a database user. The connection string includes the host, port, database name, and credentials. The user must be created in the Atlas dashboard with the appropriate username and password. The application uses the connection string and user credentials to establish the connection.",
+   "answer": "To connect an application to MongoDB Atlas, you need a **connection string** and a **database user**. \n\n1. **Connection String**: Use a format like `mongodb+srv://<username>:<password>@<host>:<port>/<database>` (e.g., `mongodb+srv://admin:password@cluster0.example.com/mydb`).\n2. **Database User**: Create a user in the Atlas dashboard (https://www.mongodb.com/atlas) and note the username, password, and database name. \n\nEnsure your application uses the correct credentials and connection string.",
    "sources": [
     {
      "title": "MongoDB Atlas",
@@ -80,15 +80,15 @@
     }
    ],
    "model": "qwen3:1.7b",
-   "retrievalMs": 14,
-   "generationMs": 6620,
+   "retrievalMs": 20,
+   "generationMs": 3508,
    "question": "How do I connect an application to Atlas?"
   },
   {
    "answer": "I could not find this in the knowledge base, so I will not guess. Try asking about MongoDB Atlas, Compass or Ollama.",
    "sources": [],
    "model": "qwen3:1.7b",
-   "retrievalMs": 13,
+   "retrievalMs": 20,
    "generationMs": 0,
    "question": "Who won the 2018 World Cup?"
   },
